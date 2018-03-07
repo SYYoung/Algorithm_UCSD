@@ -56,7 +56,7 @@ private static long getFibPartialSumEffPisanoP(long n, long m) {
         
         System.out.println("From naive algorithm:");
         long startTime = System.nanoTime();
-        long ans = getFibonacciPartialSumNaive(from, to);
+        long ans = getFibonacciPartialSumNaive(from%10000000, to%100000000);
         long elapsedTime = System.nanoTime() - startTime;
         System.out.println("ans = " + ans + ", take " + 
         			elapsedTime + " ns to finish.");

@@ -16,11 +16,16 @@ public class CoveringSegments {
 		//			i <- i+1
 		// return R
     	
-    		int[] points = new int[8];
-    		return points;
+    		ArrayList<Integer> points = new ArrayList<Integer>();
+    		
+    		int[] results = new int[segments.size()];
+    		for (int k=0; k<points.size(); k++) {
+    			results[k] = points.get(k);
+    		}
+    		return results;
     }
 
-    private static class Segment implements Comparable<Segment> {
+    public static class Segment implements Comparable<Segment> {
         int start, end;
 
         Segment(int start, int end) {
@@ -38,6 +43,12 @@ public class CoveringSegments {
 		public int compareTo(Segment seg1, Segment seg2) {
 			return seg1.end < seg2.end ? -1 : seg1.end == seg2.end ? 0 : 1;
 		}
+
+		@Override
+		public int compareTo(Segment seg) {
+			// TODO Auto-generated method stub
+			return this.end < seg.end ? -1 : this.end == seg.end ? 0: 1;
+		}
     }
     
     public static void main(String[] args) {
@@ -54,6 +65,10 @@ public class CoveringSegments {
         
         // call the sorting endpoints
         Collections.sort(segments);
+        // print out the result of sorting
+        for (int k=0; k<segments.size(); k++) {
+        		System.out.println(segments.get(k).start + "\t" + segments.get(k).end);
+        }
         int[] points = optimalPoints(segments);
         System.out.println(points.length);
         for (int point : points) {

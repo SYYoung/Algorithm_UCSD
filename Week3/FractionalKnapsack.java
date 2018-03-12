@@ -1,5 +1,6 @@
 package Week3;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FractionalKnapsack {
@@ -17,8 +18,47 @@ public class FractionalKnapsack {
 		//	return (V,A)
 		// however, this algorithm can be improved asympt if the array is sorted
 		//  seletc i with wi>0 and max vi/wi can be removed. the array is: v1/w1 >= v2/w2>=...>=vn/Wn
+        double[] unitVal = new double[values.length];
+        for (int k=0; k<values.length; k++) {
+        		unitVal[k] = values[k]/(double)weights[k];
+        }
+        ArrayList<Double> A = new ArrayList<Double>();
+        double totalVal = 0.0, leftOver = (double)capacity;
+        for (int k=0; k<values.length; k++) {
+        		if (leftOver == 0.0) {
+        			return totalVal;
+        		}
+        		double maxUnit = 0.0;
+        		int maxIndex = k;
+        		for (int j=k; j<values.length; j++) {
+        			if (unitVal[j] > maxUnit) {
+        				maxIndex = j;
+        				maxUnit = unitVal[j];
+        			}
+        		}
+        		double a = Math.min(weights[maxIndex], leftOver);
+        		totalVal += a * unitVal[maxIndex];
+        		weights[maxIndex] -= a;
+        		A.add(a);
+        		leftOver -= a;
+        		
+        		// swap highIndex with k;
+        		if (k != maxIndex) {
+            		int tmp;
+            		double tmp2;
+            		tmp = values[k];
+            		values[k] = values[maxIndex];
+            		values[maxIndex] = tmp;
+            		tmp = weights[k];
+            		weights[k] = weights[maxIndex];
+            		weights[maxIndex] = tmp;
+            		tmp2 = unitVal[k];
+            		unitVal[k] = unitVal[maxIndex];
+            		unitVal[maxIndex] = tmp2;
+        		}
+        }
 
-        return value;
+        return totalVal;
     }
 
     public static void main(String args[]) {

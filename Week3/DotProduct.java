@@ -5,6 +5,11 @@ import java.util.*;
 public class DotProduct {
     private static long maxDotProduct(int[] a, int[] b) {
         //write your code here
+    		// the greedy algorithm is:
+    		// 1. sort a[] in decending order, sort b[] in decending order.
+    		// ai * bi is a safe move
+    		Arrays.sort(a);
+    		Arrays.sort(b);
         long result = 0;
         for (int i = 0; i < a.length; i++) {
             result += a[i] * b[i];

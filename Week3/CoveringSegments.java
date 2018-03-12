@@ -17,6 +17,18 @@ public class CoveringSegments {
 		// return R
     	
     		ArrayList<Integer> points = new ArrayList<Integer>();
+    		int curr = 0;
+    		while (curr < segments.size()) {
+    			int endPoint = segments.get(curr).end;
+    			System.out.println("new endpoint = " + endPoint);
+    			points.add(endPoint);
+    			curr += 1;
+    			while ((curr < segments.size()) && (segments.get(curr).isBetween(endPoint))) {
+    				System.out.println("inside 2nd while loop, coord is: " + 
+    						segments.get(curr).start + "\t" + segments.get(curr).end);
+    				curr += 1;
+    			}
+    		}
     		
     		int[] results = new int[segments.size()];
     		for (int k=0; k<points.size(); k++) {

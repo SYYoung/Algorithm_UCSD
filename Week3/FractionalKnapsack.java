@@ -1,5 +1,6 @@
 package Week3;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ public class FractionalKnapsack {
 		//  seletc i with wi>0 and max vi/wi can be removed. the array is: v1/w1 >= v2/w2>=...>=vn/Wn
         double[] unitVal = new double[values.length];
         for (int k=0; k<values.length; k++) {
-        		unitVal[k] = values[k]/(double)weights[k];
+        		unitVal[k] = weights[k]==0 ? 0: values[k]/(double)weights[k];
         }
         ArrayList<Double> A = new ArrayList<Double>();
         double totalVal = 0.0, leftOver = (double)capacity;
@@ -38,7 +39,7 @@ public class FractionalKnapsack {
         		}
         		double a = Math.min(weights[maxIndex], leftOver);
         		totalVal += a * unitVal[maxIndex];
-        		weights[maxIndex] -= a;
+        		//weights[maxIndex] -= a;
         		A.add(a);
         		leftOver -= a;
         		
@@ -71,6 +72,7 @@ public class FractionalKnapsack {
             values[i] = scanner.nextInt();
             weights[i] = scanner.nextInt();
         }
-        System.out.println(getOptimalValue(capacity, values, weights));
+        double ans = getOptimalValue(capacity, values, weights);
+        System.out.printf("%.4f", ans);
     }
 } 

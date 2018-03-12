@@ -30,7 +30,7 @@ public class CoveringSegments {
     			}
     		}
     		
-    		int[] results = new int[segments.size()];
+    		int[] results = new int[points.size()];
     		for (int k=0; k<points.size(); k++) {
     			results[k] = points.get(k);
     		}

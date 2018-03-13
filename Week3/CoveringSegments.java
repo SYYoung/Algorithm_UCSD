@@ -4,7 +4,7 @@ import java.util.*;
 
 public class CoveringSegments {
 
-    private static int[] optimalPoints(ArrayList<Segment> segments) {
+    private static int[] optimalPointsOld(ArrayList<Segment> segments) {
         //write your code here
 		// assume that the arrays is sorted
 		// R<- {}, i<-1
@@ -36,6 +36,51 @@ public class CoveringSegments {
     		}
     		return results;
     }
+    
+    private static int[] optimalPoints(ArrayList<Segment> seg) {
+        //write your code here
+		// assume that the arrays is sorted
+		// R<- {}, i<-1
+		// while i<=n:
+		//		[l,r] <- [xi, xi+1] unit length
+		//		i <- i + 1;
+		//		try to find out the next leftmost point after this unit segment
+		//		while i<=n and xi <= r
+		//			i <- i+1
+		// return R
+    	
+    		ArrayList<Integer> points = new ArrayList<Integer>();
+    		// clone the arraylist
+    		ArrayList<Segment> segments = new ArrayList<Segment>();
+    		for (int k=0; k<seg.size(); k++) {
+    			segments.add(seg.get(k));
+    		}
+    		
+    		while (!segments.isEmpty()) {
+    			int curr = 0;
+    			int endPoint = segments.get(curr).end;
+    			System.out.println("new endpoint = " + endPoint);
+    			points.add(endPoint);
+    			segments.remove(curr);
+    			while (curr < segments.size()) {
+    				if (segments.get(curr).isBetween(endPoint)) {
+    					System.out.println("inside 2nd while loop, coord is: " + "endpoint:" + endPoint +
+    						"\t" + segments.get(curr).start + "\t" + segments.get(curr).end);
+    					segments.remove(curr);
+    				}
+    				else 
+    					curr += 1;
+    			}
+    		}
+    		
+    		int[] results = new int[points.size()];
+    		for (int k=0; k<points.size(); k++) {
+    			results[k] = points.get(k);
+    		}
+    		return results;
+    }
+    
+        
 
     public static class Segment implements Comparable<Segment> {
         int start, end;
@@ -72,8 +117,8 @@ public class CoveringSegments {
     		ArrayList<Segment> segments = new ArrayList<Segment>();
     		for (int k=0; k<num; k++) {
     			int start, end;
-    			start = (int)(Math.random() * 10);
-    			end = (int)(Math.random() * (10-start)) + start;
+    			start = (int)(Math.random() * 24);
+    			end = (int)(Math.random() * (24-start)) + start;
     			segments.add(new Segment(start, end));
     		}
     		System.out.println("num generated: " + num);

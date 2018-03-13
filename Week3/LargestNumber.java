@@ -3,13 +3,29 @@ package Week3;
 import java.util.*;
 
 public class LargestNumber {
-    private static String largestNumber(String[] a) {
+	static String largestNumber(String[] a) {
         //write your code here
-        String result = "";
-        for (int i = 0; i < a.length; i++) {
-            result += a[i];
-        }
-        return result;
+    		ArrayList<String> answer = new ArrayList<String>();
+    		ArrayList<String> digits = new ArrayList<String>();
+    		for (int k=0; k<a.length; k++)
+    			digits.add(a[k]);
+    		while (!digits.isEmpty()) {
+    			String maxDigit = "";
+    			for (String d: digits) {
+    				String dFirst = d + maxDigit;
+    				String mFirst = maxDigit + d;
+    				if (dFirst.compareTo(mFirst) >= 0) {
+    					maxDigit = d;
+    				}
+    			}
+    			answer.add(maxDigit);
+    			digits.remove(maxDigit);
+    		}
+    		
+    		String result = "";
+    		for (int k=0; k<answer.size(); k++)
+    			result = result + answer.get(k);
+    		return result;
     }
 
     public static void main(String[] args) {

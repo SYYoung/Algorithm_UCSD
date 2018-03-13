@@ -24,8 +24,8 @@ public class CoveringSegments {
     			points.add(endPoint);
     			curr += 1;
     			while ((curr < segments.size()) && (segments.get(curr).isBetween(endPoint))) {
-    				System.out.println("inside 2nd while loop, coord is: " + 
-    						segments.get(curr).start + "\t" + segments.get(curr).end);
+    				System.out.println("inside 2nd while loop, coord is: " + "endpoint:" + endPoint +
+    						"\t" + segments.get(curr).start + "\t" + segments.get(curr).end);
     				curr += 1;
     			}
     		}
@@ -63,7 +63,31 @@ public class CoveringSegments {
 		}
     }
     
+    public static ArrayList<Segment> stressTest() {
+    		// generate the number and the segments
+    		// 1<=n<=100; ,<=a<=b<=10**9
+    		int num = (int)(Math.random() *10);
+    		if (num == 0) 
+    			num = 1;
+    		ArrayList<Segment> segments = new ArrayList<Segment>();
+    		for (int k=0; k<num; k++) {
+    			int start, end;
+    			start = (int)(Math.random() * 10);
+    			end = (int)(Math.random() * (10-start)) + start;
+    			segments.add(new Segment(start, end));
+    		}
+    		System.out.println("num generated: " + num);
+    		for (int k=0; k<num; k++) {
+    			System.out.println(segments.get(k).start + "\t" + segments.get(k).end);
+    		}
+    		System.out.println();
+    		return segments;
+    		
+    }
+    
     public static void main(String[] args) {
+    		
+    		/*
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         //Segment[] segments = new Segment[n];
@@ -74,7 +98,11 @@ public class CoveringSegments {
             end = scanner.nextInt();
             segments.add(new Segment(start, end));
         }
+        */
         
+    		// call stress test
+    		ArrayList<Segment> segments = new ArrayList<Segment>();
+    		segments = stressTest();
         // call the sorting endpoints
         Collections.sort(segments);
         // print out the result of sorting

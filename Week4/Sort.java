@@ -48,4 +48,40 @@ public class Sort {
 		// 		A'[pos[A[i]]] <- A[i]
 		//		pos[A[i]] <- pos[A[i]] + 1
 	}
+	
+	public void quickSort(int[] A, int l, int r) {
+		// if l>= r:
+		//		return
+		//	m <- Partition(A, l, r)
+		//	{A[m] is in the final position
+		//	quickSort(A, l, m-1)
+		//	quickSort(A, m+1, r)
+	}
+	
+	public void partition(int[]A, int l, int r) {
+		// the pivot is x = A[l]
+		// move i from l+1 to r maintaining the following invariant
+		//		A[k] <= x for all l+1 <= k <= j
+		//		A[k] > x for all j+1 <= k <= i
+		// move A[l] to its final place
+		// here is the code:
+		//	x <- A[l] : pivot
+		//	j <- l
+		//	for i from l+1 to r:
+		//		if A[i] <= x:
+		//			j <- j+1
+		//			swap A[j] and A[i] so that A[l+1...j]<=x, A[j+1...i] > x
+		//	swap A[l] and A[j]
+		//	return j
+	}
+	
+	public void randomizedQuickSort(int[] A, int l, int r) {
+		//	if l>= r:
+		//		return
+		//	k <- random number between l and r; try to build a balanced partition
+		//	swap A[l] and A[k]
+		//	m <- partition(A, l, r)
+		// randomizedQuickSort(A, l, m-1)
+		// randomizedQuickSort(A, m+1, r)
+	}
 }

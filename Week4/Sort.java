@@ -83,5 +83,22 @@ public class Sort {
 		//	m <- partition(A, l, r)
 		// randomizedQuickSort(A, l, m-1)
 		// randomizedQuickSort(A, m+1, r)
+		
+		// to deal with equal numbers, partition into 3 regions: <, =, >
+		// such that: l<=k<=m1-1, A[k] < x
+		// m1 <= k <= m2, A[k] = x
+		// m1+1 <= k <=r, A[k] > x
+		// (m1, m2) <- partition3(A, l, r)
+	}
+	
+	public void quickSortTailRecur(int[] A, int l, int r) {
+		// while l < r:
+		//		m <- partition(A, l, r)
+		//		if (m-l) < (r-m):
+		//			quickSortTailRecur(A, l, m-1)
+		//			l <- m + 1
+		//		else:
+		//			quickSortTailRecur(A, m+1, r)
+		//			r <- m-1
 	}
 }

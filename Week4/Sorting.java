@@ -47,6 +47,20 @@ public class Sorting {
         randomizedQuickSort(a, m + 1, r);
     }
 
+    private static void randomizedQuickSort3(int[] a, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int k = random.nextInt(r - l + 1) + l;
+        int t = a[l];
+        a[l] = a[k];
+        a[k] = t;
+        //use partition3
+        int[] m = partition3(a, l, r);
+        randomizedQuickSort(a, l, m[0] - 1);
+        randomizedQuickSort(a, m[1] + 1, r);
+    }
+
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();

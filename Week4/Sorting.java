@@ -8,12 +8,35 @@ public class Sorting {
 
     private static int[] partition3(int[] a, int l, int r) {
       //write your code here
-
-
-      int m1 = l;
-      int m2 = r;
-      int[] m = {m1, m2};
-      return m;
+    		int m1=l, m2 =r;
+        int x = a[l];
+        
+        int i = l+1;
+        while (i <= m2) {
+            if (a[i] < x) {
+            		int t = a[i];
+            		a[i] = a[m1];
+            		a[m1] = t;
+                i++;
+                m1++;
+            }
+            else if (a[i] > x) {
+            		int t = a[i];
+            		a[i] = a[m2];
+            		a[m2] = t;
+            		m2--;
+            }
+            else {
+            		// if a[i] == x
+            		i++;
+            }
+        }
+        System.out.println("after partion3: the new seq:");
+        for (int k=l; k<=r; k++) {
+        		System.out.print("\t " + a[k]);
+        }
+        int[] m = {m1, m2};
+        return m;
     }
 
     private static int partition2(int[] a, int l, int r) {
@@ -57,8 +80,12 @@ public class Sorting {
         a[k] = t;
         //use partition3
         int[] m = partition3(a, l, r);
-        randomizedQuickSort(a, l, m[0] - 1);
-        randomizedQuickSort(a, m[1] + 1, r);
+        if (m[0]-1 >= l) {
+        		randomizedQuickSort3(a, l, m[0] - 1);
+        }
+        if (m[1]+1 <= r) {
+        		randomizedQuickSort3(a, m[1] + 1, r);
+        }
     }
 
     public static void main(String[] args) {

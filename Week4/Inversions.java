@@ -4,23 +4,24 @@ import java.util.*;
 
 public class Inversions {
 
-    private static long getNumberOfInversions(int[] a, int[] b, int left, int right) {
+    private static long getNumberOfInversions(int[] a, int left, int right) {
         long numberOfInversions = 0;
         if (right <= left) {
-        		b[0] = a[right];
             return numberOfInversions;
         }
         int ave = left + (right - left) / 2;
         int[] b1 = new int[ave-left+1];
         int[] b2 = new int[right-(ave+1)+1];
-        numberOfInversions += getNumberOfInversions(a, b1, left, ave);
-        numberOfInversions += getNumberOfInversions(a, b2, ave+1, right);
+        numberOfInversions += getNumberOfInversions(a, left, ave);
+        numberOfInversions += getNumberOfInversions(a, ave+1, right);
         //write your code here
-        numberOfInversions += getMerge(b1, b2, b, left, right);
+        b1 = Arrays.copyOfRange(a, left, ave+1);
+        b2 = Arrays.copyOfRange(a, ave+1, right+1);
+        numberOfInversions += getMerge(a, b1, b2, left, right);
         return numberOfInversions;
     }
     
-	public static int getMerge(int[]B, int[]C, int[] APrime, int left, int right) {
+	public static int getMerge(int[] a, int[] b1, int[] b2, int left, int right) {
 		// D <- empty array of size p+q
 		// while B and C are both non-empty:
 		//		b <- the first element of B
@@ -31,34 +32,44 @@ public class Inversions {
 		//			move c from C to the end of D
 		//	move the rest of B and C to the end of D
 		//	return D		
-		int bIndex = 0, cIndex = 0, curr = 0;
+		int bIndex = 0, cIndex = 0, curr = left;
 		int countInverse = 0;
-		while ((bIndex < B.length) && (cIndex < C.length)) {
-			if (B[bIndex] <= C[cIndex]) {
-				APrime[curr] = B[bIndex];
+		while ((bIndex < b1.length) && (cIndex < b2.length)) {
+			if (b1[bIndex] <= b2[cIndex]) {
+				a[curr] = b1[bIndex];
 				bIndex++;
 				curr++;
 			}
 			else {
-				APrime[curr] = C[cIndex];
+				a[curr] = b2[cIndex];
 				// for those after bIndex, they are all inversions
-				countInverse = (B.length - 1 - bIndex) + 1;
+				countInverse = (b1.length - 1 - bIndex) + 1;
 				cIndex++;
 				curr++;
 			}
 		}
-		if (bIndex == B.length) {
-			for (int k=cIndex; k < C.length; k++) {
-				APrime[curr] = C[k];
+		if (bIndex == b1.length) {
+			for (int k=cIndex; k < b2.length; k++) {
+				a[curr] = b2[k];
 				curr++;
 			}	
 		}
-		else if (cIndex == C.length) {
-			for (int k=bIndex; k<B.length; k++) {
-				APrime[curr] = B[k];
+		else if (cIndex == b2.length) {
+			for (int k=bIndex; k<b1.length; k++) {
+				a[curr] = b1[k];
 				curr++;
 			}
 		}
+		
+		System.out.println("inside mergeSort: left = " + left + ", right = " +right);
+		for (int k=0; k<b1.length; k++)
+			System.out.print("\t " + b1[k]);
+		System.out.println();
+		for (int k=0; k<b2.length; k++) 
+			System.out.print("\t " + b2[k]);
+		for (int k=left; k<= right; k++)
+			System.out.print("\t " + a[k]);
+		System.out.println();
 		return countInverse;
 	}
 	
@@ -72,7 +83,7 @@ public class Inversions {
         }
         
         int[] b = new int[a.length];
-        System.out.println(getNumberOfInversions(a, b, 0, a.length-1));
+        System.out.println(getNumberOfInversions(a, 0, a.length-1));
         for (int k=0; k<a.length; k++) {
         		System.out.print("\t " + a[k]);
         }

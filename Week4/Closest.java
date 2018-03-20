@@ -54,7 +54,12 @@ public class Closest {
         System.out.println("Py is: ");
         for (int k=0; k<allP.length; k++) 
         		System.out.println(Py[k]);
-        // 4. use recursive function closeUtil to find the shortest distance
+        
+        // 4. check if there is any duplicate point. if there exists, the dist will be zero.
+        for (int k=0; k<Px.length-1; k++) 
+        		if (Px[k] == Px[k+1])
+        			return 0;
+        // 5. Otherwise, use recursive function closeUtil to find the shortest distance
         ans = closeUtil(Px, Py, Px.length);
         return ans;
     }
@@ -66,19 +71,25 @@ public class Closest {
     		// Divide into 2 halves
     		int mid = num/2;
     		Point midPoint = Px[mid];
+    		System.out.println("mid point is " + midPoint);
     		// 3. get the y-sorted points from Py based on the left and right X
     		Point[] Pyl = new Point[mid+1];
     		Point[] Pyr = new Point[num-mid-1];
     		int li=0, ri = 0;
+    		System.out.println("inside closeUtil: num = " + num + ", mid= " + mid);
     		for (int k=0; k<num; k++) {
-    			if (Py[k].x <= midPoint.x)
+    			System.out.println("Py[" + k + "] = " + Py[k]);
+    			if (Py[k].x < midPoint.x)
     				Pyl[li++] = Py[k];
-    			else
+    			else if (Py[k].x == midPoint.x && Py[k].y == midPoint.y)
+    				Pyl[li++] = Py[k];
+    			else 
     				Pyr[ri++] = Py[k];
+    			System.out.println("k = " + k + ", li = " + li + ", ri = " + ri);
     		}
     		// 4. then recursive perform the closeUtil on left side and right side
-    		double dleft = closeUtil(Px, Pyl, mid);
-    		double dright = closeUtil(Px, Pyr, num-mid);
+    		double dleft = closeUtil(Px, Pyl, mid+1);
+    		double dright = closeUtil(Px, Pyr, num-mid-1);
     		// 5. get the min distance between right half and left half
     		double d = Math.min(dleft, dright);
     		
@@ -100,8 +111,8 @@ public class Closest {
 	private static double stripClosest(Point[] strip, int k, double d) {
 		// 1. compare each point with 6 neighbors and find out the min distance
 		double minD = d, dSoFar;
-		for (int i = 0; i<k; i++) {
-			for (int j=i+1; j<i+6 && (strip[j].y-strip[i].y < d); j++) {
+		for (int i = 0; i<k-1; i++) {
+			for (int j=i+1; j<i+6 && (strip[j].y-strip[i].y < d) && j<k; j++) {
 				dSoFar = dist(strip[i], strip[j]);
 				if (dSoFar < minD)
 					minD = dSoFar;

@@ -63,8 +63,51 @@ public class Closest {
 		// 1. base case: if # of points are fewer than 4, use brute force
     		if (num <= 4) 
     			return bruteForce(Px, num);
+    		// Divide into 2 halves
+    		int mid = num/2;
+    		Point midPoint = Px[mid];
+    		// 3. get the y-sorted points from Py based on the left and right X
+    		Point[] Pyl = new Point[mid+1];
+    		Point[] Pyr = new Point[num-mid-1];
+    		int li=0, ri = 0;
+    		for (int k=0; k<num; k++) {
+    			if (Py[k].x <= midPoint.x)
+    				Pyl[li++] = Py[k];
+    			else
+    				Pyr[ri++] = Py[k];
+    		}
+    		// 4. then recursive perform the closeUtil on left side and right side
+    		double dleft = closeUtil(Px, Pyl, mid);
+    		double dright = closeUtil(Px, Pyr, num-mid);
+    		// 5. get the min distance between right half and left half
+    		double d = Math.min(dleft, dright);
     		
-		return 0;
+    		// 6. for merge part, build the strip
+    		Point[] strip = new Point[num];
+    		int k = 0;
+    		for (int i=0; i<num; i++) {
+    			if ((Math.abs(Py[i].x - midPoint.x)) < d) {
+    				strip[k] = Py[i];
+    				k++;
+    			}
+    		}
+    		// 7. now call the stripClose to find the min distance
+    		double dStrip = stripClosest(strip, k, d);
+    		return (Math.min(dStrip, d));
+   
+	}
+
+	private static double stripClosest(Point[] strip, int k, double d) {
+		// 1. compare each point with 6 neighbors and find out the min distance
+		double minD = d, dSoFar;
+		for (int i = 0; i<k; i++) {
+			for (int j=i+1; j<i+6 && (strip[j].y-strip[i].y < d); j++) {
+				dSoFar = dist(strip[i], strip[j]);
+				if (dSoFar < minD)
+					minD = dSoFar;
+			}
+		}
+		return minD;
 	}
 
 	private static double bruteForce(Point[] px, int num) {
@@ -96,6 +139,10 @@ public class Closest {
         for (int i = 0; i < n; i++) {
         		allP[i] = new Point(nextInt(), nextInt());
         }
+        // from naive algorithm
+        double ans = bruteForce(allP, n);
+        System.out.println("From naive algorithm, the min distance = " + ans);
+        System.out.print(" From divide and conquer, the min distance = ");
         System.out.println(minimalDistance(allP));
         writer.close();
     }

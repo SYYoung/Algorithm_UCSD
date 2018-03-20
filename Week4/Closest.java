@@ -72,8 +72,9 @@ public class Closest {
 		for (int i=0; i<num; i++)
 			for (int j=i+1; j<num; j++) {
 				System.out.println(" i = " + i + "\t, j = " + j);
-				if (dist(px[i], px[j]) < minD)
-					minD = dist(px[i], px[j]);
+				double d = dist(px[i], px[j]);
+				if (d < minD)
+					minD = d;
 			}
 		return minD;
 	}

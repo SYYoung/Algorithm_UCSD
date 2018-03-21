@@ -48,12 +48,14 @@ public class Closest {
         compareFlag = COMPARE_Y;
         Arrays.sort(Py);
         
+        /*
         System.out.println("Px is: ");
         for (int k=0; k<allP.length; k++) 
         		System.out.println(Px[k]);
         System.out.println("Py is: ");
         for (int k=0; k<allP.length; k++) 
         		System.out.println(Py[k]);
+        	*/
         
         // 4. check if there is any duplicate point. if there exists, the dist will be zero.
         for (int k=0; k<Px.length-1; k++) 
@@ -71,21 +73,21 @@ public class Closest {
     		// Divide into 2 halves
     		int mid = num/2;
     		Point midPoint = Px[leftMost + mid];
-    		System.out.println("mid point is " + midPoint);
+    		//System.out.println("mid point is " + midPoint);
     		// 3. get the y-sorted points from Py based on the left and right X
     		Point[] Pyl = new Point[mid+1];
     		Point[] Pyr = new Point[num-mid-1];
     		int li=0, ri = 0;
-    		System.out.println("inside closeUtil: num = " + num + ", mid= " + mid);
+    		//System.out.println("inside closeUtil: num = " + num + ", mid= " + mid);
     		for (int k=0; k<num; k++) {
-    			System.out.println("Py[" + k + "] = " + Py[k]);
+    			//System.out.println("Py[" + k + "] = " + Py[k]);
     			if (Py[k].x < midPoint.x)
     				Pyl[li++] = Py[k];
     			else if (Py[k].x == midPoint.x && Py[k].y == midPoint.y)
     				Pyl[li++] = Py[k];
     			else 
     				Pyr[ri++] = Py[k];
-    			System.out.println("k = " + k + ", li = " + li + ", ri = " + ri);
+    			//System.out.println("k = " + k + ", li = " + li + ", ri = " + ri);
     		}
     		// 4. then recursive perform the closeUtil on left side and right side
     		double dleft = closeUtil(Px, Pyl, leftMost, mid+1);
@@ -113,7 +115,7 @@ public class Closest {
 		double minD = d, dSoFar;
 		for (int i = 0; i<k-1; i++) {
 			for (int j=i+1; (j<i+6) && (j<k) && (strip[j].y-strip[i].y < d) ; j++) {
-				System.out.println("inside stripClosest: i=" + i +", j=" + j + ", k=" + k);
+				//System.out.println("inside stripClosest: i=" + i +", j=" + j + ", k=" + k);
 				dSoFar = dist(strip[i], strip[j]);
 				if (dSoFar < minD)
 					minD = dSoFar;
@@ -126,7 +128,7 @@ public class Closest {
 		double minD = Double.POSITIVE_INFINITY;
 		for (int i=leftMost; i<leftMost+num; i++)
 			for (int j=i+1; j<leftMost+num; j++) {
-				System.out.println(" i = " + i + "\t, j = " + j);
+				//System.out.println(" i = " + i + "\t, j = " + j);
 				double d = dist(px[i], px[j]);
 				if (d < minD)
 					minD = d;
@@ -137,7 +139,7 @@ public class Closest {
 	private static double dist(Point p1, Point p2) {
 		double ans;
 		ans = Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
-		System.out.println("distance between " + p1 + "\t" + p2 + "\t = " + ans);
+		//System.out.println("distance between " + p1 + "\t" + p2 + "\t = " + ans);
 		return ans;
 	}
 

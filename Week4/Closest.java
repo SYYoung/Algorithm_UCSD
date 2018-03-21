@@ -60,17 +60,17 @@ public class Closest {
         		if (Px[k] == Px[k+1])
         			return 0;
         // 5. Otherwise, use recursive function closeUtil to find the shortest distance
-        ans = closeUtil(Px, Py, Px.length);
+        ans = closeUtil(Px, Py, 0, Px.length);
         return ans;
     }
 
-    private static double closeUtil(Point[] Px, Point[] Py, int num) {
+    private static double closeUtil(Point[] Px, Point[] Py, int leftMost, int num) {
 		// 1. base case: if # of points are fewer than 4, use brute force
     		if (num <= 4) 
-    			return bruteForce(Px, num);
+    			return bruteForce(Px, leftMost, num);
     		// Divide into 2 halves
     		int mid = num/2;
-    		Point midPoint = Px[mid];
+    		Point midPoint = Px[leftMost + mid];
     		System.out.println("mid point is " + midPoint);
     		// 3. get the y-sorted points from Py based on the left and right X
     		Point[] Pyl = new Point[mid+1];
@@ -88,8 +88,8 @@ public class Closest {
     			System.out.println("k = " + k + ", li = " + li + ", ri = " + ri);
     		}
     		// 4. then recursive perform the closeUtil on left side and right side
-    		double dleft = closeUtil(Px, Pyl, mid+1);
-    		double dright = closeUtil(Px, Pyr, num-mid-1);
+    		double dleft = closeUtil(Px, Pyl, leftMost, mid+1);
+    		double dright = closeUtil(Px, Pyr, leftMost+mid+1, num-mid-1);
     		// 5. get the min distance between right half and left half
     		double d = Math.min(dleft, dright);
     		
@@ -112,7 +112,8 @@ public class Closest {
 		// 1. compare each point with 6 neighbors and find out the min distance
 		double minD = d, dSoFar;
 		for (int i = 0; i<k-1; i++) {
-			for (int j=i+1; j<i+6 && (strip[j].y-strip[i].y < d) && j<k; j++) {
+			for (int j=i+1; (j<i+6) && (j<k) && (strip[j].y-strip[i].y < d) ; j++) {
+				System.out.println("inside stripClosest: i=" + i +", j=" + j + ", k=" + k);
 				dSoFar = dist(strip[i], strip[j]);
 				if (dSoFar < minD)
 					minD = dSoFar;
@@ -121,10 +122,10 @@ public class Closest {
 		return minD;
 	}
 
-	private static double bruteForce(Point[] px, int num) {
+	private static double bruteForce(Point[] px, int leftMost, int num) {
 		double minD = Double.POSITIVE_INFINITY;
-		for (int i=0; i<num; i++)
-			for (int j=i+1; j<num; j++) {
+		for (int i=leftMost; i<leftMost+num; i++)
+			for (int j=i+1; j<leftMost+num; j++) {
 				System.out.println(" i = " + i + "\t, j = " + j);
 				double d = dist(px[i], px[j]);
 				if (d < minD)
@@ -151,7 +152,7 @@ public class Closest {
         		allP[i] = new Point(nextInt(), nextInt());
         }
         // from naive algorithm
-        double ans = bruteForce(allP, n);
+        double ans = bruteForce(allP, 0, n);
         System.out.println("From naive algorithm, the min distance = " + ans);
         System.out.print(" From divide and conquer, the min distance = ");
         System.out.println(minimalDistance(allP));

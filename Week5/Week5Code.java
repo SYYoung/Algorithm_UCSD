@@ -35,4 +35,20 @@ public class Week5Code {
 		//					MinNumCoins(m) <- NumCoins
 		//	return MinNumCoins(money)
 	}
+	
+	public void EditDistance( int[] A, int[] B) {
+		// A[1..n], B[1..m]
+		//	D(i,0) <-i and D(0,j) <- j for all i,j
+		//	for j from 1 to m:
+		//		for i from 1 to n:
+		//			insertion <- D(i,j-1) + 1
+		//			deletion <- D(i-1, j) + 1
+		//			match <- D(i-1, j-1)
+		//			mismatch <- D(i-1, k-1_ + 1
+		//			if A[i] == B[j]:
+		//				D(i,j) <- min(insertion, deletion, match)
+		//			else
+		//				D(i,j) <- min(insertion, deletion, mismatch)
+		//	return D(n,m)
+	}
 }

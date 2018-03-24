@@ -51,4 +51,19 @@ public class Week5Code {
 		//				D(i,j) <- min(insertion, deletion, mismatch)
 		//	return D(n,m)
 	}
+	
+	public void outputAlignment(int i, int j) {
+		//	if i = 0 and j = 0:
+		//		return
+		//	if backtrack(i,j)= down_arrow:
+		//		outputAlignment(i-1, j)
+		//		print( A[i], -)
+		//	else if backtrack(i,j) = right_arrow
+		//		outputAlignment(i,j-1)
+		//		print( -, B[j])
+		//	else:
+		//		outputAlignment(i-1,j-1)
+		//		print(A[i],N[j])
+	}
+	
 }

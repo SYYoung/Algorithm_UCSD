@@ -44,7 +44,7 @@ public class Week5Code {
 		//			insertion <- D(i,j-1) + 1
 		//			deletion <- D(i-1, j) + 1
 		//			match <- D(i-1, j-1)
-		//			mismatch <- D(i-1, k-1_ + 1
+		//			mismatch <- D(i-1, j-1) + 1
 		//			if A[i] == B[j]:
 		//				D(i,j) <- min(insertion, deletion, match)
 		//			else

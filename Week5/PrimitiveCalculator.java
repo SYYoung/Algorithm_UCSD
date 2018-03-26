@@ -28,8 +28,8 @@ public class PrimitiveCalculator {
     		ArrayList<Integer> midResult = new ArrayList<Integer>();
     		ArrayList<String> opSeq = new ArrayList<String>();
     		int[] minOps = new int[n+1];
-    		minOps[0]= 0; minOps[0] = 0;
-    		midResult.add(0); midResult.add(1);
+    		minOps[0]= 0; minOps[1] = 0;
+    		//midResult.add(0); midResult.add(1);
     		//opSeq.add(""); opSeq.add("");
     		String currOp = "";
     		
@@ -52,13 +52,13 @@ public class PrimitiveCalculator {
     			}
     			else if ((k%2 ==0 ) && ( k%3 == 0 )) {
     				opSoFar = minOps[k/3] + 1;
-    				if (minOps[k/3] < minOps[k/2]) {
-    					minOps[k] = minOps[k/3] + 1;
-    					currOp = M3;
-    				}
-    				else {
+    				if (minOps[k/2] < minOps[k/3]) {
     					minOps[k] = minOps[k/2] + 1;
     					currOp = M2;
+    				}
+    				else {
+    					minOps[k] = minOps[k/3] + 1;
+    					currOp = M3;
     				}
     			}    			
     			else {

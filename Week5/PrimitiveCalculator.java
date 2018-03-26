@@ -59,6 +59,8 @@ public class PrimitiveCalculator {
     		}
     		// now traces back the sequence
     		int val = n;
+    		midResult.add(val);
+    		
     		while ( val > 1) {
     			if ((val % 2 == 0) && (val%3 != 0)){
     				System.out.println("compare: " + minOps[val/2] +  "\t" + minOps[val-1]);
@@ -75,7 +77,7 @@ public class PrimitiveCalculator {
     					System.out.println("new val =" + val);
     				}
     			}
-    			else if ((n%3 == 0) && (n%2 != 0)) {
+    			else if ((val%3 == 0) && (val%2 != 0)) {
     				if (minOps[val/3] < minOps[val-1]) {
     					opSeq.add(M3);
     					midResult.add(val/3);
@@ -87,7 +89,7 @@ public class PrimitiveCalculator {
     					val = val - 1;
     				}
     			}
-    			else if ((n%3 == 0) && (n%2 == 0)) {
+    			else if ((val%3 == 0) && (val%2 == 0)) {
     				if (minOps[val/3] <= minOps[val/2]){
     					if (minOps[val/3] < minOps[val-1]) {
     						opSeq.add(M3);
@@ -138,8 +140,8 @@ public class PrimitiveCalculator {
         }
         
         List<Integer> seq2 = optimal_sequence_dp(n);
-        System.out.println("\n. from dp: " + (sequence.size() - 1));
-        for (Integer x: sequence) {
+        System.out.println("\n. from dp: " + (seq2.size() - 1));
+        for (Integer x: seq2) {
         		System.out.print(x + " " );
         }
     }

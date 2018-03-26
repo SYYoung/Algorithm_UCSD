@@ -37,48 +37,42 @@ public class PrimitiveCalculator {
     			minOps[k] = Integer.MAX_VALUE;
     			int opSoFar = 0;
     			if (( k%2 == 0 ) && (k%3 != 0)){
-    				opSoFar = minOps[k/2] + 1;
-    				if (opSoFar < minOps[k]) {
-    					minOps[k] = opSoFar;
-    					currOp = M2;
-    				}
+    				minOps[k] = Math.min(minOps[k/2], minOps[k-1]) + 1;
     			}
     			else if ((k%2 !=0 ) && ( k%3 == 0 )) {
-    				opSoFar = minOps[k/3] + 1;
-    				if (opSoFar < minOps[k]) {
-    					minOps[k] = opSoFar;
-    					currOp = M3;
-    				}
+    				minOps[k] = Math.min(minOps[k/3],  minOps[k-1]) + 1;
     			}
     			else if ((k%2 ==0 ) && ( k%3 == 0 )) {
-    				opSoFar = minOps[k/3] + 1;
-    				if (minOps[k/2] < minOps[k/3]) {
-    					minOps[k] = minOps[k/2] + 1;
-    					currOp = M2;
-    				}
-    				else {
-    					minOps[k] = minOps[k/3] + 1;
-    					currOp = M3;
-    				}
-    			}    			
+    				int tmp = Math.min(minOps[k/2],  minOps[k/3]);
+    				minOps[k] = Math.min(tmp, minOps[k-1]) + 1;
+    			}
     			else {
     				minOps[k] = minOps[k-1] + 1;
     				currOp = P1;
     			}
     		}
+    		
+    		// print out the minOps
+    		System.out.println("minOps: num, # of operations");
+    		for (int k=1; k<=n; k++) {
+    			System.out.println(k + "\t" + minOps[k]);
+    		}
     		// now traces back the sequence
     		int val = n;
-    		while ( val > 0) {
+    		while ( val > 1) {
     			if ((val % 2 == 0) && (val%3 != 0)){
+    				System.out.println("compare: " + minOps[val/2] +  "\t" + minOps[val-1]);
     				if (minOps[val/2] < minOps[val-1]) {
     					opSeq.add(M2);
     					midResult.add(val/2);
     					val = val/2;
+    					System.out.println("new val = " + val);
     				}
     				else {
     					opSeq.add(P1);
     					midResult.add(val-1);
     					val = val - 1;
+    					System.out.println("new val =" + val);
     				}
     			}
     			else if ((n%3 == 0) && (n%2 != 0)) {
@@ -94,15 +88,27 @@ public class PrimitiveCalculator {
     				}
     			}
     			else if ((n%3 == 0) && (n%2 == 0)) {
-    				if (minOps[val/3] < minOps[val/2]) {
-    					opSeq.add(M3);
-    					midResult.add(val/3);
-    					val = val/3;
+    				if (minOps[val/3] <= minOps[val/2]){
+    					if (minOps[val/3] < minOps[val-1]) {
+    						opSeq.add(M3);
+    						midResult.add(val/3);
+    						val = val/3;
+    					}
+    					else {
+    						opSeq.add(P1);
+    						midResult.add(val-1);
+    						val = val-1;
+    					}
     				}
-    				else {
+    				else if ((minOps[val/2] < minOps[val-1])) {
     					opSeq.add(M2);
     					midResult.add(val/2);
     					val = val/2;
+    				}
+    				else {
+    					opSeq.add(P1);
+    					midResult.add(val-1);
+    					val = val-1;
     				}
     			}
     			else {

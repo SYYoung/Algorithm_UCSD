@@ -98,7 +98,7 @@ class EditDistance2 {
 		OutputAlignment(firstStr.length(), secStr.length());
 		
 		double score = distTab[firstStr.length()][secStr.length()];
-		int editRes = (int) ((2*newFirst.length() - 2*score)/2);
+		int editRes = (int) ((firstStr.length() + secStr.length() - 2*score)/2);
 		System.out.println("Edit distance = " + editRes);
 		for (int k = 0; k<newFirst.length(); k++) {
 			System.out.print(newFirst.charAt(k) + "\t");

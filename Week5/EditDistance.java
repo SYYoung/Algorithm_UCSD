@@ -37,7 +37,7 @@ class EditDistance {
 				int insert = distTab[i][j-1] + SIG;
 				int del = distTab[i-1][j] + SIG;
 				int indel = Math.min(insert, del);
-				if (A.charAt(i) == B.charAt(j)) {
+				if (A.charAt(i-1) == B.charAt(j-1)) {
 					int match = distTab[i-1][j-1];
 					distTab[i][j] = Math.min(indel, match);
 				}
@@ -70,6 +70,7 @@ class EditDistance {
 			for (int j=0; j<distTab[0].length; j++) {
 				System.out.print(distTab[i][j] + "\t");
 			}
+			System.out.println();
 		}
 	}
 	

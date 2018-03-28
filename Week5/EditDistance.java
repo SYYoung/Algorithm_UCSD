@@ -94,8 +94,8 @@ class EditDistance {
 			System.out.println();
 		}
 		OutputAlignment(firstStr.length(), secStr.length());
-
-		System.out.println();
+		
+		System.out.println("Edit distance = " + distTab[firstStr.length()][secStr.length()]);
 		for (int k = 0; k<newFirst.length(); k++) {
 			System.out.print(newFirst.charAt(k) + "\t");
 		}

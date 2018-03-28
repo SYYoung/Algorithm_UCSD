@@ -2,14 +2,14 @@ package Week5;
 
 import java.util.*;
 
-class EditDistance {
+class EditDistance2 {
 	double[][] distTab;
 	static double MU = 0, SIG = -0.5,MAT_SCORE = 1;
 	String firstStr, secStr;
 	StringBuilder newFirst = new StringBuilder();
 	StringBuilder newSec = new StringBuilder();
 	
-	public  EditDistance(String A, String B) {
+	public  EditDistance2(String A, String B) {
 		//write your code here
 		// A[1..n], B[1..m]
 		//	D(i,0) <-i and D(0,j) <- j for all i,j
@@ -68,12 +68,12 @@ class EditDistance {
 		
 		if (i==0 && j==0)
 			return;
-		if ((i>0) && (distTab[i][j] == distTab[i-1][j]+1)) {
+		if ((i>0) && (distTab[i][j] == distTab[i-1][j]+SIG)) {
 			newFirst.insert(0, firstStr.charAt(i-1));
 			newSec.insert(0,  '-');
 			OutputAlignment(i-1, j);
 		}
-		else if ((j>0) && (distTab[i][j] == distTab[i][j-1]+1)) {
+		else if ((j>0) && (distTab[i][j] == distTab[i][j-1]+SIG)) {
 			newFirst.insert(0,  '-');
 			newSec.insert(0, secStr.charAt(j-1));
 			OutputAlignment(i, j-1);
@@ -115,7 +115,7 @@ class EditDistance {
     String s = scan.next();
     String t = scan.next();
 
-    EditDistance ed = new EditDistance(s, t);
+    EditDistance2 ed = new EditDistance2(s, t);
     ed.OutputTab();
   }
 

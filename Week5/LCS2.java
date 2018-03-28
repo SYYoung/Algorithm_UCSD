@@ -104,8 +104,8 @@ public class LCS2 {
 		}
 		OutputAlignment(firstSeq.length, secSeq.length);
 		
-		double score = distTab[firstStr.length()][secStr.length()];
-		int editRes = (int) ((firstStr.length() + secStr.length() - 2*score)/2);
+		double score = distTab[firstSeq.length][secSeq.length];
+		int editRes = (int) ((firstSeq.length + secSeq.length - 2*score)/2);
 		System.out.println("Edit distance = " + editRes);
 		for (int k = 0; k< newFirstSeq.size(); k++) {
 			System.out.print(newFirstSeq.get(k) + "\t");
@@ -116,10 +116,10 @@ public class LCS2 {
 		}			
 	}
 	
-    private int lcs2(int[] a, int[] b) {
+    public LCS2(int[] a, int[] b) {
         //Write your code here
     		EditDistance(a, b);
-        return 0;
+        OutputTab();
     }
 
     public static void main(String[] args) {
@@ -137,7 +137,7 @@ public class LCS2 {
             b[i] = scanner.nextInt();
         }
 
-        //System.out.println(lcs2(a, b));
+        LCS2 tmpLcs2 = new LCS2(a, b);
     }
 }
 

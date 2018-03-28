@@ -6,6 +6,8 @@ class EditDistance {
 	int[][] distTab;
 	static int MU = 1, SIG = 1;
 	String firstStr, secStr;
+	StringBuilder newFirst = new StringBuilder();
+	StringBuilder newSec = new StringBuilder();
 	
 	public  EditDistance(String A, String B) {
 		//write your code here
@@ -61,8 +63,6 @@ class EditDistance {
 		//	else:
 		//		outputAlignment(i-1,j-1)
 		//		print(A[i],B[j])	  
-		StringBuilder newFirst = new StringBuilder();
-		StringBuilder newSec = new StringBuilder();
 		
 		if (i==0 && j==0)
 			return;
@@ -82,13 +82,6 @@ class EditDistance {
 			OutputAlignment(i-1, j-1);
 		}
 
-		for (int k = 0; k<newFirst.length(); k++) {
-			System.out.print(newFirst.charAt(k) + "\t");
-		}
-		System.out.println();
-		for (int k = 0; k<newSec.length(); k++) {
-			System.out.print(newSec.charAt(k) + "\t");
-		}			
   }
   
 	public void OutputTab() {
@@ -101,6 +94,15 @@ class EditDistance {
 			System.out.println();
 		}
 		OutputAlignment(firstStr.length(), secStr.length());
+
+		System.out.println();
+		for (int k = 0; k<newFirst.length(); k++) {
+			System.out.print(newFirst.charAt(k) + "\t");
+		}
+		System.out.println();
+		for (int k = 0; k<newSec.length(); k++) {
+			System.out.print(newSec.charAt(k) + "\t");
+		}			
 	}
 	
   public static void main(String args[]) {

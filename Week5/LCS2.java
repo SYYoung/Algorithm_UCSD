@@ -6,11 +6,8 @@ public class LCS2 {
 	double[][] distTab;
 	static double MU = 0, SIG = 0, MAT_SCORE = 1;
 	String[] firstSeq, secSeq;
-	String firstStr, secStr;
 	ArrayList<String> newFirstSeq = new ArrayList<String>();
 	ArrayList<String> newSecSeq = new ArrayList<String>();
-	StringBuilder newFirst = new StringBuilder();
-	StringBuilder newSec = new StringBuilder();
 	
 	public  void EditDistance(int[] a, int[] b) {
 		//write your code here
@@ -95,7 +92,6 @@ public class LCS2 {
   
 	public void OutputTab() {
 		// print out the table: distTab
-		System.out.println(firstStr + " \t" + secStr);
 		for (int i=0; i<distTab.length; i++) {
 			for (int j=0; j<distTab[0].length; j++) {
 				System.out.print(distTab[i][j] + "\t");
@@ -117,11 +113,15 @@ public class LCS2 {
 	}
 	
 	public int CalLCS() {
+		ArrayList<String> ans = new ArrayList<String>();
 		int res = 0;
 		for (int k=0; k<newFirstSeq.size(); k++) {
-			if (newFirstSeq.get(k).equals(newSecSeq.get(k)))
+			if (newFirstSeq.get(k).equals(newSecSeq.get(k))) {
 				res++;
+				ans.add(newFirstSeq.get(k));
+			}
 		}
+		System.out.println("\nThe LCS is : " + ans);
 		return res;
 	}
 	

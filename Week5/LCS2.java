@@ -116,10 +116,20 @@ public class LCS2 {
 		}			
 	}
 	
+	public int CalLCS() {
+		int res = 0;
+		for (int k=0; k<newFirstSeq.size(); k++) {
+			if (newFirstSeq.get(k).equals(newSecSeq.get(k)))
+				res++;
+		}
+		return res;
+	}
+	
     public LCS2(int[] a, int[] b) {
         //Write your code here
     		EditDistance(a, b);
         OutputTab();
+        System.out.println("\n" + CalLCS());
     }
 
     public static void main(String[] args) {

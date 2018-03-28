@@ -49,7 +49,7 @@ class EditDistance {
 		}
   }
   
-	public void OutputAlignment() {
+	public void OutputAlignment(int i, int j) {
 		//	if i=0 and j=0:
 		//		return
 		//	if i>0 and D(i,j) = D(i-1,j)+1:
@@ -61,6 +61,34 @@ class EditDistance {
 		//	else:
 		//		outputAlignment(i-1,j-1)
 		//		print(A[i],B[j])	  
+		StringBuilder newFirst = new StringBuilder();
+		StringBuilder newSec = new StringBuilder();
+		
+		if (i==0 && j==0)
+			return;
+		if ((i>0) && (distTab[i][j] == distTab[i-1][j]+1)) {
+			newFirst.insert(0, firstStr.charAt(i-1));
+			newSec.insert(0,  '-');
+			OutputAlignment(i-1, j);
+		}
+		else if ((j>0) && (distTab[i][j] == distTab[i][j-1]+1)) {
+			newFirst.insert(0,  '-');
+			newSec.insert(0, secStr.charAt(j-1));
+			OutputAlignment(i, j-1);
+		}
+		else {
+			newFirst.insert(0, firstStr.charAt(i-1));
+			newSec.insert(0,  secStr.charAt(j-1));
+			OutputAlignment(i-1, j-1);
+		}
+
+		for (int k = 0; k<newFirst.length(); k++) {
+			System.out.print(newFirst.charAt(k) + "\t");
+		}
+		System.out.println();
+		for (int k = 0; k<newSec.length(); k++) {
+			System.out.print(newSec.charAt(k) + "\t");
+		}			
   }
   
 	public void OutputTab() {
@@ -72,6 +100,7 @@ class EditDistance {
 			}
 			System.out.println();
 		}
+		OutputAlignment(firstStr.length(), secStr.length());
 	}
 	
   public static void main(String args[]) {
@@ -82,7 +111,6 @@ class EditDistance {
 
     EditDistance ed = new EditDistance(s, t);
     ed.OutputTab();
-    ed.OutputAlignment();
   }
 
 }

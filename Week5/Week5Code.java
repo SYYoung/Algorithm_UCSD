@@ -66,4 +66,18 @@ public class Week5Code {
 		//		print(A[i],N[j])
 	}
 	
+	public void outputAlignment2(int i, int j) {
+		//	if i=0 and j=0:
+		//		return
+		//	if i>0 and D(i,j) = D(i-1,j)+1:
+		//		outputAlignment(i-1,j)
+		//		print(A[i],-)
+		//	else if j>0 and K(i,j)=D(i,j-1)+1:
+		//		outputAlignment(i,j-1)
+		//		print(-,B[j])
+		//	else:
+		//		outputAlignment(i-1,j-1)
+		//		print(A[i],B[j])
+	}
+	
 }

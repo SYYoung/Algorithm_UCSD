@@ -66,7 +66,7 @@ class EditDistance2 {
 		//		outputAlignment(i-1,j-1)
 		//		print(A[i],B[j])	  
 		
-		if (i==0 && j==0)
+		if ((i+j == 0) || (i+j == 1))
 			return;
 		if ((i>0) && (distTab[i][j] == distTab[i-1][j]+SIG)) {
 			newFirst.insert(0, firstStr.charAt(i-1));

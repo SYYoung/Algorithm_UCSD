@@ -85,7 +85,7 @@ public class LCS3 {
 		//		outputAlignment(i-1,j-1)
 		//		print(A[i],B[j])	  
 		System.out.println("i, j, k: " + "\t" + i + ",\t" + j + ",\t" + k);
-		if (i==0 && j==0 && k==0)
+		if ((i+j+k == 1) || (i+j+k == 0))
 			return;
 		if ((i>0) && (distTab[i][j][k] == distTab[i-1][j][k]+SIG)) {
 			newFirstSeq.add(0, new String(firstSeq[i-1]));

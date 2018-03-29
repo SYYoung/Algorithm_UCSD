@@ -85,7 +85,7 @@ public class LCS3 {
 		//		outputAlignment(i-1,j-1)
 		//		print(A[i],B[j])	  
 		System.out.println("i, j, k: " + "\t" + i + ",\t" + j + ",\t" + k);
-		if ((i+j+k == 1) || (i+j+k == 0))
+		if (i==0 && j==0 && k==0)
 			return;
 		if ((i>0) && (distTab[i][j][k] == distTab[i-1][j][k]+SIG)) {
 			newFirstSeq.add(0, new String(firstSeq[i-1]));
@@ -99,7 +99,7 @@ public class LCS3 {
 			newThirdSeq.add(0, "-");
 			OutputAlignment(i, j-1, k);	
 		}
-		else if ((j>0) && (distTab[i][j][k] == distTab[i][j][k-1]+SIG)) {
+		else if ((k>0) && (distTab[i][j][k] == distTab[i][j][k-1]+SIG)) {
 			newFirstSeq.add(0, "-");
 			newSecSeq.add(0, "-");
 			newThirdSeq.add(0, new String(thirdSeq[k-1]));

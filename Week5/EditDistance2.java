@@ -109,11 +109,31 @@ class EditDistance2 {
 		}			
 	}
 	
+	public static String generateInput() {
+		String alpha = "abcdefghijklmnopqrstuvwxyz";
+		int seqLen = 6;
+		Random rnd = new Random();
+		StringBuilder sb = new StringBuilder(seqLen);
+		
+		for (int k=0; k<seqLen; k++) {
+			sb.append(alpha.charAt(rnd.nextInt(alpha.length())));
+		}
+		return sb.toString();
+	}
+	
   public static void main(String args[]) {
+	 
     Scanner scan = new Scanner(System.in);
 
     String s = scan.next();
     String t = scan.next();
+   
+	  /*
+	  String s = generateInput();
+	  String t = generateInput();
+	  
+	  System.out.println(" s = " + s + "\t," + t);
+	  */
 
     EditDistance2 ed = new EditDistance2(s, t);
     ed.OutputTab();

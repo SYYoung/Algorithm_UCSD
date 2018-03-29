@@ -70,7 +70,7 @@ public class LCS2 {
 		//		outputAlignment(i-1,j-1)
 		//		print(A[i],B[j])	  
 		
-		if ((i+j == 0) || (i+j == 1))
+		if (i==0 && j==0)
 			return;
 		if ((i>0) && (distTab[i][j] == distTab[i-1][j]+SIG)) {
 			newFirstSeq.add(0, new String(firstSeq[i-1]));
@@ -132,7 +132,21 @@ public class LCS2 {
         System.out.println("\n" + CalLCS());
     }
 
+    public static int[] generateInput() {
+    		int maxSeq = 6;
+    		int maxNum = 100;
+    		
+    		Random rnd = new Random();
+    		int num = 1 + (int)(Math.random() * maxSeq);
+    		int[] c  = new int[num];
+    		for (int k=0; k<num; k++) {
+    			c[k] = (int)(rnd.nextInt(maxNum));
+    		}
+    		return c;
+    }
+    
     public static void main(String[] args) {
+    		/*
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int[] a = new int[n];
@@ -146,7 +160,18 @@ public class LCS2 {
         for (int i = 0; i < m; i++) {
             b[i] = scanner.nextInt();
         }
+        */
 
+    		int[] a = generateInput();
+    		int[] b = generateInput();
+    		System.out.println("first input:");
+    		for (int k=0; k<a.length; k++)
+    			System.out.print(",\t" + a[k]);
+    		System.out.println("Second input: ");
+    		for (int k=0; k<b.length; k++)
+    			System.out.print(",\t" + b[k]);
+    		System.out.println();
+    		
         LCS2 tmpLcs2 = new LCS2(a, b);
     }
 }

@@ -133,8 +133,8 @@ public class LCS2 {
     }
 
     public static int[] generateInput() {
-    		int maxSeq = 6;
-    		int maxNum = 100;
+    		int maxSeq = 10;
+    		int maxNum = 10;
     		
     		Random rnd = new Random();
     		int num = 1 + (int)(Math.random() * maxSeq);

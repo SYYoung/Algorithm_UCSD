@@ -14,6 +14,9 @@ public class ClassNote {
 	}
 	
 	public void KnapsackWithoutRep(int W) {
+		// recurrence formula:
+		//	max{value(w-wi, i-1)+vi, value(w,i-1)}
+		// 1st one: including wi, 2nd: wi is not used
 		// init all value(0,j) <- 0
 		// init all value(w,0) <- 0
 		//	for i from 1 to n:
@@ -37,5 +40,28 @@ public class ClassNote {
 		//				value(w) <- val
 		//	insert value(w) into hash table with key w
 		//	return value(w)
+	}
+	
+	public void MinAndMax(int i, int j) {
+		// min <- +infinity
+		//	min <- -infinity
+		//	for k from i to j-1:
+		//		a <- M(i,k) op_k M(k+1,j)
+		//		b <- M(i,k) op_k m(k+1,j)
+		//		c <- m(i,k) op_k M(k+1,j)
+		//		d <- m(i,k) op_k m(k+1,j)
+		//		min <- min(min, a,b,c,d)
+		//		max <- max(max, a,b,c,d)
+		//	return (min, max)
+	}
+	
+	public void Parentheses(int d1, int op1, int d2, int op2, int dn) {
+		//	for i from 1 to n:
+		//		m(i,i) <- di, M(i,i) <- di
+		//	for s from 1 to n-1:
+		//		for i from 1 to n-s:
+		//			j <- i+s
+		//			m(oi,j),M(i,j) <- MinAndMax(i,j)
+		//	return M(1,n)
 	}
 }

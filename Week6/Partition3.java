@@ -3,57 +3,68 @@ package Week6;
 import java.util.*;
 import java.io.*;
 
-public class Partition3 {
-	static int[][][] Bm;
+public class Partition3_Old {
+	boolean [][] Bm;
+	static int numPart = 2;
     
-	public static int KnapsackWithoutRep(int W, int[] wList, int[] vList) {
-		// recurrence formula:
-		//	max{value(w-wi, i-1)+vi, value(w,i-1)}
-		// 1st one: including wi, 2nd: wi is not used
-		// init all value(0,j) <- 0
-		// init all value(w,0) <- 0
-		int numItem = wList.length;
-		int[][] value = new int[numItem+1][W+1];
-		for (int k=0; k<=numItem; k++) 
-			value[k][0] = 0;
-		for (int k=0; k<=W; k++)
-			value[0][k] = 0;
-		//	for i from 1 to n:
-		//		for w from 1 to W:
-		//			value(w,i) <- value(w,i-1)
-		//			if wi <= w:
-		//				val <- value(w-wi, i-1) + vi
-		//				if value(w,i)<val
-		//					value(w,) <- val
-		for (int i=1; i<=numItem; i++) {
-			for (int w=1; w<=W; w++) {
-				value[i][w] = value[i-1][w];
-				if (wList[i-1] <= w) {
-					int val = value[i-1][w-wList[i-1]] + vList[i-1];
-					if (val > value[i][w]) {
-						value[i][w] = val;
-					}
-				}
-			}
-		}
-		return value[numItem][W];
-	}
-	
-	private static int partition3(int[]A, int numItem) {
+
+	private boolean partition3(int[]A, int numItem) {
 		int sum = 0;
 		for (int i=0; i<numItem; i++)
 			sum+= A[i];
-		if (sum % 3 != 0)
-			return 0;
-		// sort the A[] in non-increasing order
+		if (sum % numPart != 0)
+			return false;
+		int groupSum = sum/numPart;
+		Bm = new boolean[numItem +1][groupSum+1];
+		/* don't sort the array
 		ArrayList<Integer> aList = new ArrayList<Integer>();
-		for (int k=0; k<A.length; k++) 
-			aList.add(A[k]);
+		for (int i=0; i<orig.length; i++)
+			aList.add(orig[i]);
 		Collections.sort(aList);
 		Collections.reverse(aList);
-		// call Knapsack without repetitions 3 times
-		int ans = KnapsackWithoutRep(sum/3, A, A);
-		return 0;
+		int[] A = new int[orig.length];
+		for (int i=0; i<orig.length; i++)
+			A[i] = aList.get(i);
+		*/
+		
+		// initialization
+		for (int i=0; i<=numItem; i++)
+			Bm[i][0] = true;
+		for (int i=1; i<=groupSum; i++)
+			Bm[0][i] = false;
+		
+		for (int i=1; i<=numItem; i++) {
+			for (int j=1; j<=groupSum; j++) {
+				Bm[i][j] = Bm[i-1][j];
+				if (j >= A[i-1]) {
+					Bm[i][j] = Bm[i][j] || Bm[i-1][j-A[i-1]]; 
+				}
+				System.out.print("\t" + Bm[i][j]);
+			}
+			System.out.println();;
+		}
+		reconstruct(A, Bm, groupSum);
+		return (Bm[numItem][groupSum]);
+	}
+	
+	private void reconstruct(int[] A, boolean[][] Bm, int groupSum) {
+		int row = A.length;
+		int col = groupSum;
+		ArrayList<Integer> aList = new ArrayList<Integer>();
+		//aList.add(A[col]);
+		while (row >0 ) {
+			if (Bm[row-1][col]) {
+				// item A[col-1] is not included.
+				row = row-1;
+			}
+			else if (Bm[row-1][col-A[row-1]]) {
+				aList.add(A[row-1]);
+				col = col - A[row-1];
+				row = row-1;
+			}
+		}
+		for (int i : aList)
+			System.out.println("the list includes: " + i);
 	}
 	
     public static void main(String[] args) {
@@ -64,7 +75,12 @@ public class Partition3 {
             A[i] = scanner.nextInt();
         }
         
-        System.out.println(partition3(A, n));
+        Partition3_Old part = new Partition3_Old();
+        boolean ans = part.partition3(A, n);
+        if (ans)
+        	System.out.println("Can be divided equally into " + numPart + "groups.");
+        else 
+        	System.out.println("Cannot be divided equally into " + numPart + "groups.");
     }
 }
 

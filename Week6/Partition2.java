@@ -3,12 +3,12 @@ package Week6;
 import java.util.*;
 import java.io.*;
 
-public class Partition3 {
+public class Partition2 {
 	boolean [][] Bm;
 	static int numPart = 2;
     
 
-	private boolean partition3(int[]A, int numItem) {
+	private boolean partition2(int[]A, int numItem) {
 		int sum = 0;
 		for (int i=0; i<numItem; i++)
 			sum+= A[i];
@@ -16,16 +16,6 @@ public class Partition3 {
 			return false;
 		int groupSum = sum/numPart;
 		Bm = new boolean[numItem +1][groupSum+1];
-		/* don't sort the array
-		ArrayList<Integer> aList = new ArrayList<Integer>();
-		for (int i=0; i<orig.length; i++)
-			aList.add(orig[i]);
-		Collections.sort(aList);
-		Collections.reverse(aList);
-		int[] A = new int[orig.length];
-		for (int i=0; i<orig.length; i++)
-			A[i] = aList.get(i);
-		*/
 		
 		// initialization
 		for (int i=0; i<=numItem; i++)
@@ -43,7 +33,8 @@ public class Partition3 {
 			}
 			System.out.println();;
 		}
-		reconstruct(A, Bm, groupSum);
+		if (Bm[numItem][groupSum])
+			reconstruct(A, Bm, groupSum);
 		return (Bm[numItem][groupSum]);
 	}
 	
@@ -51,7 +42,7 @@ public class Partition3 {
 		int row = A.length;
 		int col = groupSum;
 		ArrayList<Integer> aList = new ArrayList<Integer>();
-		//aList.add(A[col]);
+		
 		while (row >0 ) {
 			if (Bm[row-1][col]) {
 				// item A[col-1] is not included.
@@ -75,8 +66,8 @@ public class Partition3 {
             A[i] = scanner.nextInt();
         }
         
-        Partition3 part = new Partition3();
-        boolean ans = part.partition3(A, n);
+        Partition2 part = new Partition2();
+        boolean ans = part.partition2(A, n);
         if (ans)
         	System.out.println("Can be divided equally into " + numPart + "groups.");
         else 

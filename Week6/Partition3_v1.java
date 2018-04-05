@@ -3,7 +3,7 @@ package Week6;
 import java.util.*;
 import java.io.*;
 
-public class Partition3 {
+public class Partition3_v1 {
 	static int[][][] Bm;
     
 	public static int KnapsackWithoutRep(int W, int[] wList, int[] vList) {

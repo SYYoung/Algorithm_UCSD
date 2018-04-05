@@ -3,7 +3,7 @@ package Week6;
 import java.util.*;
 import java.io.*;
 
-public class Partition3_Old {
+public class Partition3 {
 	boolean [][] Bm;
 	static int numPart = 2;
     
@@ -75,7 +75,7 @@ public class Partition3_Old {
             A[i] = scanner.nextInt();
         }
         
-        Partition3_Old part = new Partition3_Old();
+        Partition3 part = new Partition3();
         boolean ans = part.partition3(A, n);
         if (ans)
         	System.out.println("Can be divided equally into " + numPart + "groups.");

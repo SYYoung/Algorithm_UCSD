@@ -64,4 +64,14 @@ public class ClassNote {
 		//			m(oi,j),M(i,j) <- MinAndMax(i,j)
 		//	return M(1,n)
 	}
+	
+	public void reconstruct() {
+		// sequece: 5-8+7x4-8+9
+		// check M[1,n] find out how we get this answer. 
+		// in order to calculate M[1,n], it can be (1,6) ->(1,1) - (2,6)
+		// i.e. for (int i=1; i<n; i++) {
+		//		check if M[1,n] = M[1,i] - M[2,6]
+		//		since it matches, we will get M[2,6]: min value.
+		//		
+	}
 }

@@ -5,7 +5,7 @@ import java.io.*;
 
 public class Partition3 {
 	boolean [][] Bm;
-	static int numPart = 2;
+	static int numPart = 3;
     
 
 	private boolean partition3(int[]A, int numItem) {

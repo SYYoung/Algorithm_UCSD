@@ -7,6 +7,7 @@ public class PlacingParentheses {
 	char[] op;
 	long[][] maxArr;
 	long[][] minArr;
+	StringBuilder finalExp = new StringBuilder();
 	
     private long getMaximValue(String exp) {
     	// first parse the input string into data and op arrays
@@ -87,19 +88,46 @@ public class PlacingParentheses {
 		ret[1] = maxVal;
 		return ret;
 	}
-	
-	public void Parentheses(int d1, int op1, int d2, int op2, int dn) {
-
+	public void buildup() {
+		long ans = maxArr[1][data.length-1];
+		int start = 1, end = data.length-1;
+		buildupSub(start, end);
+		System.out.println("The max expression is: " + finalExp.toString());
 	}
 	
-	public void reconstruct() {
+	public void buildupSub(int start, int end) {
 		// sequece: 5-8+7x4-8+9
 		// check M[1,n] find out how we get this answer. 
 		// in order to calculate M[1,n], it can be (1,6) ->(1,1) - (2,6)
 		// i.e. for (int i=1; i<n; i++) {
 		//		check if M[1,n] = M[1,i] - M[2,6]
 		//		since it matches, we will get M[2,6]: min value.
-		//		
+		//	
+		if (start == end) {
+			finalExp.append(data[start]);
+			return;
+		}
+		int bIndex = reconstruct(start, end, maxArr[start][end]);
+		finalExp.append("(");
+		buildupSub(start, bIndex);
+		finalExp.append(op[bIndex]);
+		buildupSub(bIndex+1, end);
+		finalExp.append(")");
+	}
+	
+	public int reconstruct(int start, int end, long ans) {
+		int bIndex = start;
+		for (int k=start; k<end; k++) {
+			long a = eval(maxArr[start][k], maxArr[k+1][end], op[k]); 
+			long b = eval(maxArr[start][k], minArr[k+1][end], op[k]); 
+			long c = eval(minArr[start][k], maxArr[k+1][end], op[k]); 
+			long d = eval(minArr[start][k], minArr[k+1][end], op[k]); 
+			if ((a==ans) || (b==ans) || (c==ans) || (d==ans)) {
+				bIndex = k;
+				break;
+			}
+		}
+		return bIndex;
 	}
 	
 	private void parseInput(String exp) {
@@ -130,6 +158,8 @@ public class PlacingParentheses {
 
         PlacingParentheses path = new PlacingParentheses();
         long ans = path.getMaximValue(exp);
+        System.out.println("The max value of the expression = " + ans);
+        path.buildup();
     }
 }
 

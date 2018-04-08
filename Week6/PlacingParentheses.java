@@ -91,11 +91,11 @@ public class PlacingParentheses {
 	public void buildup() {
 		long ans = maxArr[1][data.length-1];
 		int start = 1, end = data.length-1;
-		buildupSub(start, end);
+		buildupSub(start, end, ans);
 		System.out.println("The max expression is: " + finalExp.toString());
 	}
 	
-	public void buildupSub(int start, int end) {
+	public void buildupSub(int start, int end, long value) {
 		// sequece: 5-8+7x4-8+9
 		// check M[1,n] find out how we get this answer. 
 		// in order to calculate M[1,n], it can be (1,6) ->(1,1) - (2,6)
@@ -107,27 +107,48 @@ public class PlacingParentheses {
 			finalExp.append(data[start]);
 			return;
 		}
-		int bIndex = reconstruct(start, end, maxArr[start][end]);
+		long[] result = reconstruct(start, end, value);
 		finalExp.append("(");
-		buildupSub(start, bIndex);
-		finalExp.append(op[bIndex]);
-		buildupSub(bIndex+1, end);
+		buildupSub(start, (int)result[2], result[0]);
+		finalExp.append(op[(int)result[2]]);
+		buildupSub((int)result[2]+1, end, result[1]);
 		finalExp.append(")");
 	}
 	
-	public int reconstruct(int start, int end, long ans) {
+	public long[] reconstruct(int start, int end, long ans) {
+		long[] result = new long[3];
 		int bIndex = start;
 		for (int k=start; k<end; k++) {
 			long a = eval(maxArr[start][k], maxArr[k+1][end], op[k]); 
+			if (a==ans) {
+				result[0] = maxArr[start][k];
+				result[1] = maxArr[k+1][end];
+				result[2] = k;
+				break;
+			}
 			long b = eval(maxArr[start][k], minArr[k+1][end], op[k]); 
+			if (b==ans) {
+				result[0] = maxArr[start][k];
+				result[1] = minArr[k+1][end];
+				result[2] = k;
+				break;
+			}
 			long c = eval(minArr[start][k], maxArr[k+1][end], op[k]); 
+			if (c==ans) {
+				result[0] = minArr[start][k];
+				result[1] = maxArr[k+1][end];
+				result[2] = k;
+				break;
+			}
 			long d = eval(minArr[start][k], minArr[k+1][end], op[k]); 
-			if ((a==ans) || (b==ans) || (c==ans) || (d==ans)) {
-				bIndex = k;
+			if (d==ans) {
+				result[0] = minArr[start][k];
+				result[1] = minArr[k+1][end];
+				result[2] = k;
 				break;
 			}
 		}
-		return bIndex;
+		return result;
 	}
 	
 	private void parseInput(String exp) {
